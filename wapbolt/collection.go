@@ -27,10 +27,30 @@ type Item struct {
 
 // Request holds the HTTP request details
 type Request struct {
-	Method string        `json:"method"`
-	URL    interface{}   `json:"url"` // Can be string or URL object, we'll use string for simplicity usually, or a custom struct
+	Method           string                 `json:"method"`
+	URL              interface{}            `json:"url"`
+	Header           []HeaderField          `json:"header,omitempty"`
+	Body             *Body                  `json:"body,omitempty"`
+	Description      string                 `json:"description,omitempty"`
+	Responses        []Response             `json:"response,omitempty"`         // Examples in Postman/Wapbolt
+	FieldValidations map[string]interface{} `json:"field_validations,omitempty"` // Wapbolt specific extension
+}
+
+// Response represents a request example/response
+type Response struct {
+	Name   string        `json:"name"`
+	Status string        `json:"status,omitempty"`
+	Code   int           `json:"code,omitempty"`
 	Header []HeaderField `json:"header,omitempty"`
-	Body   *Body         `json:"body,omitempty"`
+	Body   string        `json:"body,omitempty"`
+}
+
+// ValidationRule represents Wapbolt field validation rules
+type ValidationRule struct {
+	Rules       []string `json:"rules,omitempty"` // e.g., ["required", "email"]
+	Min         float64  `json:"min,omitempty"`
+	Max         float64  `json:"max,omitempty"`
+	Description string   `json:"description,omitempty"`
 }
 
 // HeaderField represents a single HTTP header

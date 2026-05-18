@@ -52,6 +52,13 @@ func ParseRoutes(app *fiber.App, collection *wapbolt.Collection, baseUrl string)
 			},
 		}
 
+		// Check for registered metadata
+		if meta, ok := wapbolt.GetMetadata(route.Method, path); ok {
+			reqItem.Request.Description = meta.Description
+			reqItem.Request.FieldValidations = meta.FieldValidations
+			reqItem.Request.Responses = meta.Examples
+		}
+
 		// Add body placeholder for methods that usually have body
 		if route.Method == "POST" || route.Method == "PUT" || route.Method == "PATCH" {
 			reqItem.Request.Body = &wapbolt.Body{

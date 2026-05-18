@@ -22,6 +22,37 @@ func main() {
 	auth := api.Group("/auth")
 	auth.Post("/login", func(c *fiber.Ctx) error { return c.SendString("Login") })
 
+	// Register Metadata for Login (Validations & Examples)
+	wapbolt.RegisterMetadata("POST", "/api/v1/auth/login", wapbolt.RouteMetadata{
+		Description: "Authenticate user and get access token",
+		FieldValidations: map[string]interface{}{
+			"body": map[string]interface{}{
+				"email": wapbolt.ValidationRule{
+					Rules:       []string{"required", "email"},
+					Description: "Registered user email address",
+				},
+				"password": wapbolt.ValidationRule{
+					Rules:       []string{"required"},
+					Description: "User password (min 8 chars)",
+				},
+			},
+		},
+		Examples: []wapbolt.Response{
+			{
+				Name:   "Success Response",
+				Status: "OK",
+				Code:   200,
+				Body:   "{\n  \"token\": \"eyJhbGci...\",\n  \"expires_in\": 3600\n}",
+			},
+			{
+				Name:   "Invalid Credentials",
+				Status: "Unauthorized",
+				Code:   401,
+				Body:   "{\n  \"error\": \"invalid_credentials\"\n}",
+			},
+		},
+	})
+
 	// Endpoint to trigger Wapbolt Collection generation
 	app.Get("/generate-wapbolt", func(c *fiber.Ctx) error {
 		col := wapbolt.NewCollection("Fiber Example API", "Auto-generated collection from Fiber")

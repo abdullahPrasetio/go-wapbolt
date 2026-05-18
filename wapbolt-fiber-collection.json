@@ -1,0 +1,58 @@
+{
+  "info": {
+    "name": "Fiber Example API",
+    "description": "Auto-generated collection from Fiber",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Api",
+      "item": [
+        {
+          "name": "/api/v1/users/",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/users/",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "/api/v1/users/:id",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/users/id",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generate-Wapbolt",
+      "item": [
+        {
+          "name": "/generate-wapbolt",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/generate-wapbolt",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

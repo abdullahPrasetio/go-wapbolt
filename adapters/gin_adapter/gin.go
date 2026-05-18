@@ -48,6 +48,13 @@ func ParseRoutes(engine *gin.Engine, collection *wapbolt.Collection, baseUrl str
 			},
 		}
 
+		// Check for registered metadata
+		if meta, ok := wapbolt.GetMetadata(route.Method, path); ok {
+			reqItem.Request.Description = meta.Description
+			reqItem.Request.FieldValidations = meta.FieldValidations
+			reqItem.Request.Responses = meta.Examples
+		}
+
 		if route.Method == "POST" || route.Method == "PUT" || route.Method == "PATCH" {
 			reqItem.Request.Body = &wapbolt.Body{
 				Mode: "raw",
