@@ -19,36 +19,27 @@ func main() {
 	users.Post("/", func(c *fiber.Ctx) error { return c.SendString("Create user") })
 	users.Get("/:id", func(c *fiber.Ctx) error { return c.SendString("Get user by ID") })
 
+	// Define a struct for Login request
+	type LoginRequest struct {
+		Email    string `json:"email" validate:"required,email" description:"User login email"`
+		Password string `json:"password" validate:"required,min=8" description:"Secret password"`
+	}
+
 	auth := api.Group("/auth")
 	auth.Post("/login", func(c *fiber.Ctx) error { return c.SendString("Login") })
 
-	// Register Metadata for Login (Validations & Examples)
+	// Register Metadata for Login using AUTOMATIC Struct Parsing
 	wapbolt.RegisterMetadata("POST", "/api/v1/auth/login", wapbolt.RouteMetadata{
-		Description: "Authenticate user and get access token",
+		Description: "Authenticate user using struct tags",
 		FieldValidations: map[string]interface{}{
-			"body": map[string]interface{}{
-				"email": wapbolt.ValidationRule{
-					Rules:       []string{"required", "email"},
-					Description: "Registered user email address",
-				},
-				"password": wapbolt.ValidationRule{
-					Rules:       []string{"required"},
-					Description: "User password (min 8 chars)",
-				},
-			},
+			"body": wapbolt.ParseStruct(LoginRequest{}),
 		},
 		Examples: []wapbolt.Response{
 			{
-				Name:   "Success Response",
+				Name:   "Success",
 				Status: "OK",
 				Code:   200,
-				Body:   "{\n  \"token\": \"eyJhbGci...\",\n  \"expires_in\": 3600\n}",
-			},
-			{
-				Name:   "Invalid Credentials",
-				Status: "Unauthorized",
-				Code:   401,
-				Body:   "{\n  \"error\": \"invalid_credentials\"\n}",
+				Body:   "{\n  \"token\": \"abc-123\"\n}",
 			},
 		},
 	})
