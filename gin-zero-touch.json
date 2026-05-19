@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "Gin Zero Touch",
+    "description": "Nested folders test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Api",
+      "item": [
+        {
+          "name": "/api/v1/register [POST]",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/register",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"example@mail.com\",\n  \"full_name\": \"string\",\n  \"password\": \"value_8\"\n}"
+            },
+            "field_validations": {
+              "body": {
+                "email": {
+                  "rules": [
+                    "required",
+                    "email"
+                  ],
+                  "nullable": false,
+                  "description": "Registered email"
+                },
+                "full_name": {
+                  "rules": [
+                    "required"
+                  ],
+                  "nullable": false,
+                  "description": "User full legal name"
+                },
+                "password": {
+                  "rules": [
+                    "required"
+                  ],
+                  "min": 8,
+                  "nullable": false,
+                  "description": "Secure password"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Export-Docs",
+      "item": [
+        {
+          "name": "/export-docs [GET]",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/export-docs",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

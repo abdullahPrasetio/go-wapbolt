@@ -50,6 +50,7 @@ type ValidationRule struct {
 	Rules       []string `json:"rules,omitempty"` // e.g., ["required", "email"]
 	Min         float64  `json:"min,omitempty"`
 	Max         float64  `json:"max,omitempty"`
+	Nullable    bool     `json:"nullable"`
 	Description string   `json:"description,omitempty"`
 }
 
@@ -113,4 +114,9 @@ func (c *Collection) ExportToFile(filename string) error {
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
 	return encoder.Encode(c)
+}
+
+// ToJSON returns the collection as formatted JSON bytes
+func (c *Collection) ToJSON() ([]byte, error) {
+	return json.MarshalIndent(c, "", "  ")
 }
