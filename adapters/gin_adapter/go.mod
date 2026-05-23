@@ -40,4 +40,4 @@ require (
 )
 
 // For local development — remove this replace when tagging a release.
-replace github.com/abdullahPrasetio/go-wapbolt => ../..
+// replace github.com/abdullahPrasetio/go-wapbolt => ../..
