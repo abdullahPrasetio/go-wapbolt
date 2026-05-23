@@ -4,4 +4,5 @@ use (
 	.
 	./adapters/fiber_adapter
 	./adapters/gin_adapter
+	./examples/zero_touch_example
 )
